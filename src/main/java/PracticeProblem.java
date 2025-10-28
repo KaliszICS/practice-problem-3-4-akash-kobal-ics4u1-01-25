@@ -1,27 +1,43 @@
 public class PracticeProblem {
 
-	public static void main(String args[]) {
+    public static void main(String[] args) {
+        int[] result = recaman(6);
+        for (int x : result) {
+            System.out.print(x + " ");
+        }
+    }
 
-	}
+    public static int[] recaman(int n) {
+        // base case for invalid or zero
+        if (n <= 0) return new int[0];
 
-	public static void q1() {
-		//Write question 1 code here
-	}
+        int[] seq = new int[n + 1]; // include 0 internally
+        seq[0] = 0;
+        helper(seq, 1);
 
-	public static void q2() {
-		//Write question 2 code here
-	}
+        // create array without the initial 0
+        int[] result = new int[n];
+        for (int i = 0; i < n; i++) {
+            result[i] = seq[i + 1];
+        }
+        return result;
+    }
 
-	public static void q3() {
-		//Write question 3 code here
-	}
+    private static void helper(int[] seq, int i) {
+        if (i == seq.length) return; // stop when done
 
-	public static void q4() {
-		//Write question 4 code here
-	}
+        int curr = seq[i - 1] - i;
+        if (curr < 0 || contains(seq, curr, i)) {
+            curr = seq[i - 1] + i;
+        }
+        seq[i] = curr;
+        helper(seq, i + 1);
+    }
 
-	public static void q5() {
-		//Write question 5 code here
-	}
-
+    private static boolean contains(int[] seq, int val, int upto) {
+        for (int j = 0; j < upto; j++) {
+            if (seq[j] == val) return true;
+        }
+        return false;
+    }
 }
